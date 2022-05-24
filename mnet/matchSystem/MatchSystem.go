@@ -3,10 +3,10 @@ package matchSystem
 import (
 	"container/list"
 	"fmt"
-	"server/face"
+	"github.com/MouseChannel/MCServer/face"
 
-	"server/mnet/roomSystem"
-	"server/pb"
+	"github.com/MouseChannel/MCServer/mnet/roomSystem"
+	"github.com/MouseChannel/MCServer/pb"
 	"sync"
 )
 

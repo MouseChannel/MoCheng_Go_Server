@@ -2,7 +2,7 @@ package mnet
 
 import (
 	"fmt"
-	"server/face"
+	"github.com/MouseChannel/MCServer/face"
 )
 
 type TestStruct struct {

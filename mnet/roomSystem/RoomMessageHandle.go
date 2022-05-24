@@ -2,10 +2,10 @@ package roomSystem
 
 import (
 	"fmt"
-	"server/face"
-	"server/mnet/connectPool"
-	"server/pb"
-	"server/singleton"
+	"github.com/MouseChannel/MCServer/face"
+	"github.com/MouseChannel/MCServer/mnet/connectPool"
+	"github.com/MouseChannel/MCServer/pb"
+	"github.com/MouseChannel/MCServer/singleton"
 )
 
 type RoomMessageHandle struct {

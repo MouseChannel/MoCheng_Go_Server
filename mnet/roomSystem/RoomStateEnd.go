@@ -1,8 +1,8 @@
 package roomSystem
 
 import (
-	"server/face"
-	"server/pb"
+	"github.com/MouseChannel/MCServer/face"
+	"github.com/MouseChannel/MCServer/pb"
 )
 
 type RoomStateEnd struct {

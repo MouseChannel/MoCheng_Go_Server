@@ -2,12 +2,12 @@ package mnet
 
 import (
 	"fmt"
-	"server/face"
-	"server/mnet/connectPool"
-	"server/mnet/matchSystem"
-	"server/mnet/roomSystem"
-	"server/pb"
-	"server/singleton"
+	"github.com/MouseChannel/MCServer/face"
+	"github.com/MouseChannel/MCServer/mnet/connectPool"
+	"github.com/MouseChannel/MCServer/mnet/matchSystem"
+	"github.com/MouseChannel/MCServer/mnet/roomSystem"
+	"github.com/MouseChannel/MCServer/pb"
+	"github.com/MouseChannel/MCServer/singleton"
 
 	"google.golang.org/protobuf/proto"
 )

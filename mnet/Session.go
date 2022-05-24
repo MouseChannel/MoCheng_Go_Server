@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"net"
 
-	"server/face"
-	"server/singleton"
+	"github.com/MouseChannel/MCServer/face"
+	"github.com/MouseChannel/MCServer/singleton"
 	"time"
 
 	"github.com/xtaci/kcp-go/v5"

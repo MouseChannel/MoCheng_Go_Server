@@ -2,7 +2,7 @@ package connectPool
 
 import (
 	"fmt"
-	"server/face"
+	"github.com/MouseChannel/MCServer/face"
 	"sync"
 )
 

@@ -1,13 +1,13 @@
 package main
 
 import (
-	"server/mnet"
+	"github.com/MouseChannel/MCServer/mnet"
 
 	"fmt"
-	// "server/singleton"
+	// "github.com/MouseChannel/MCServer/singleton"
 )
 
-// mnet "server/Net"
+// mnet "github.com/MouseChannel/MCServer/Net"
 
 func main() {
 

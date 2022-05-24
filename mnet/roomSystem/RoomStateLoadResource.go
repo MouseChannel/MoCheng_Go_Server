@@ -2,8 +2,8 @@ package roomSystem
 
 import (
 	"fmt"
-	"server/face"
-	"server/pb"
+	"github.com/MouseChannel/MCServer/face"
+	"github.com/MouseChannel/MCServer/pb"
 )
 
 type RoomStateLoadResource struct {

@@ -1,7 +1,7 @@
 package face
 
 import (
-	"server/pb"
+	"github.com/MouseChannel/MCServer/pb"
 )
 
 type IMessageHandle interface {

@@ -1,6 +1,6 @@
 package face
 
-import "server/pb"
+import "github.com/MouseChannel/MCServer/pb"
 
 type IMatchSystem interface {
 	Init()

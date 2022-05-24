@@ -1,7 +1,7 @@
 package mnet
 
 import (
-	"server/face"
+	"github.com/MouseChannel/MCServer/face"
 )
 
 type Request struct {
