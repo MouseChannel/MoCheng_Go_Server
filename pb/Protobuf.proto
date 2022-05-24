@@ -1,0 +1,108 @@
+syntax = "proto3";
+package pb;
+option go_package = "./pb";
+
+// this is a comment 
+
+message AccountData{
+  string name = 1;
+}  
+
+message SelectData{
+    
+
+    string playerName = 2;
+    
+    string chatMes = 3;
+    int32 faction = 6;
+    bool isReady = 7;
+
+  }
+
+ message PbMessage {
+  string name = 1;
+  
+  enum CMD {
+
+    login = 0;
+    match = 1;
+    room = 2;
+    // 这个fight只是服务器发客户端
+    fight = 3;
+    chat = 4;
+    fightEnd = 5;
+  }
+  CMD cmd = 2;
+
+  enum CmdMatch{
+    joinMatch = 0;
+    quitMatch = 1;
+   
+  }
+  CmdMatch cmdMatch = 3;
+
+  enum CmdRoom{
+    
+    confirm = 0;
+    select = 1;
+    selectDate = 2;
+    load = 3;
+    loadData = 4;
+
+    fightStart = 5;
+    //这个fightop只是客户端发服务器
+    fightOp = 6;
+    dismissed = 7;
+  }
+  CmdRoom cmdRoom = 4;
+  
+  int32 roomIndex = 5;
+  string chatMes = 6;
+
+  
+
+
+  
+  
+
+  
+
+ 
+  SelectData selectData = 7;
+  repeated SelectData roomSelectData = 8;
+
+
+
+  int32 loadPercent = 9;
+  repeated int32 roomLoadPercent =10;
+
+  int32 frameId = 11;
+
+  FightMessage sendFightMessage = 12;
+
+  repeated FightMessage fightMessage = 13;
+
+}
+
+message FightMessage{
+
+  enum BattleCMD{
+    move = 0;
+    fight = 1;
+    interact = 2;
+  }
+  BattleCMD battleCMD = 1;
+
+  repeated int32 selectedUnit = 3;
+  // move
+
+  int32 endPos = 5;
+  //fight
+  int32 enemyUnit = 6;
+  //interact
+  int32 interactObject = 7;
+
+}
+
+
+// protoc --go_out=./ ./Protobuf.proto
