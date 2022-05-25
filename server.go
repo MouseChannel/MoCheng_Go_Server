@@ -1,13 +1,13 @@
 package main
 
 import (
-	"github.com/MouseChannel/MouseChannelServer/mnet"
+	"github.com/MouseChannel/MoChengServer/mnet"
 
 	"fmt"
-	// "github.com/MouseChannel/MouseChannelServer/singleton"
+	// "github.com/MouseChannel/MoChengServer/singleton"
 )
 
-// mnet "github.com/MouseChannel/MouseChannelServer/Net"
+// mnet "github.com/MouseChannel/MoChengServer/Net"
 
 func main() {
 

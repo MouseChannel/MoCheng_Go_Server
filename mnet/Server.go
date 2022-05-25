@@ -8,12 +8,12 @@ import (
 	"net"
 	"os"
 
-	"github.com/MouseChannel/MouseChannelServer/face"
-	"github.com/MouseChannel/MouseChannelServer/singleton"
+	"github.com/MouseChannel/MoChengServer/face"
+	"github.com/MouseChannel/MoChengServer/singleton"
 
-	"github.com/MouseChannel/MouseChannelServer/mnet/matchSystem"
+	"github.com/MouseChannel/MoChengServer/mnet/matchSystem"
 
-	"github.com/MouseChannel/MouseChannelServer/mnet/connectPool"
+	"github.com/MouseChannel/MoChengServer/mnet/connectPool"
 
 	"time"
 
@@ -94,7 +94,7 @@ func (server *Server) ListenKCP() {
 }
 
 func (server *Server) Init() {
-	fmt.Println("github.com/MouseChannel/MouseChannelServer Init")
+	fmt.Println("github.com/MouseChannel/MoChengServer Init")
 	server.IP = "0.0.0.0:6666"
 	server.UDPIP = "0.0.0.0:7777"
 	server.connectionPool = singleton.Singleton[connectPool.ConnectPool]()
@@ -141,8 +141,8 @@ func (server *Server) PrintLogo() {
 
 	file, err := os.Open("./logo.txt")
 	if err != nil {
-		fmt.Print("err")
-		return
+		fmt.Print("Print Logo failed But still fine")
+		// return
 	}
 	defer file.Close()
 	reader := bufio.NewReader(file)

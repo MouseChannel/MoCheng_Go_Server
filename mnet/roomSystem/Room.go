@@ -1,9 +1,9 @@
 package roomSystem
 
 import (
-	"github.com/MouseChannel/MouseChannelServer/face"
-	"github.com/MouseChannel/MouseChannelServer/mnet/connectPool"
-	"github.com/MouseChannel/MouseChannelServer/singleton"
+	"github.com/MouseChannel/MoChengServer/face"
+	"github.com/MouseChannel/MoChengServer/mnet/connectPool"
+	"github.com/MouseChannel/MoChengServer/singleton"
 
 	"sync"
 )
@@ -29,17 +29,16 @@ type Room struct {
 	stateMap     map[RoomState]face.IRoomState
 	currentState RoomState
 	roomId       uint32
- 
+
 	playerSessions []face.ISession
 	selectArr      []int
-	 
-	lock sync.Mutex
+
+	lock        sync.Mutex
 	connectPool *connectPool.ConnectPool
 }
 
 func (room *Room) Init() {
-	room.connectPool = singleton.Singleton[ connectPool.ConnectPool]()
-	
+	room.connectPool = singleton.Singleton[connectPool.ConnectPool]()
 
 	room.connectPool.AddRoom(room.roomId, room)
 	// room.server
@@ -71,7 +70,6 @@ func (room *Room) Broadcast(data []byte) {
 	}
 }
 
- 
 func (room *Room) ChangeRoomState(newState int) {
 
 	if int(room.currentState) != newState {
@@ -90,8 +88,6 @@ func (room *Room) ChangePlayersRoomId() {
 		// room.server.GetSession(i).ChangeRoomId(room.roomId)
 	}
 }
-
- 
 
 func (room *Room) SendLoadResource() {
 
@@ -139,5 +135,3 @@ func NewRoom(playerSessions []face.ISession) *Room {
 	// newRoom.Init()
 	return newRoom
 }
-
- 

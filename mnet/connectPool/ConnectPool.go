@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/MouseChannel/MouseChannelServer/face"
+	"github.com/MouseChannel/MoChengServer/face"
 )
 
 type ConnectPool struct {

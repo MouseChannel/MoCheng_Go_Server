@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/MouseChannel/MouseChannelServer/face"
-	"github.com/MouseChannel/MouseChannelServer/pb"
+	"github.com/MouseChannel/MoChengServer/face"
+	"github.com/MouseChannel/MoChengServer/pb"
 )
 
 type RoomStateSelect struct {

@@ -3,8 +3,8 @@ package roomSystem
 import (
 	"fmt"
 
-	"github.com/MouseChannel/MouseChannelServer/face"
-	"github.com/MouseChannel/MouseChannelServer/pb"
+	"github.com/MouseChannel/MoChengServer/face"
+	"github.com/MouseChannel/MoChengServer/pb"
 )
 
 type RoomStateLoadResource struct {
@@ -36,22 +36,22 @@ func (state *RoomStateLoadResource) Exit() {
 func (state *RoomStateLoadResource) Update(session face.ISession, mes *pb.PbMessage) {
 	index := state.room.GetPlayerIndex(session)
 	loadPercent := mes.LoadPercent
-	switch mes.CmdRoom{
+	switch mes.CmdRoom {
 	case pb.PbMessage_fightStart:
 		state.loadDone[index] = true
 		mes := pb.MakeRoomLoadData(100)
 		state.room.Broadcast(mes)
-		
+
 		if state.CheckAllLoadDone() {
 			state.room.ChangeRoomState(int(roomStateFight))
 		}
-	
+
 	case pb.PbMessage_loadData:
 		state.percent[index] = int(loadPercent)
-		
+
 		state.room.Broadcast(pb.Byte(mes))
-	
-}
+
+	}
 
 }
 func (state *RoomStateLoadResource) CheckAllLoadDone() bool {
