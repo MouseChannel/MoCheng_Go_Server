@@ -1,4 +1,4 @@
-module server
+module github.com/MouseChannel/MCServer
 
 go 1.18
 
