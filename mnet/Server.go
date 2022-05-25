@@ -141,8 +141,10 @@ func (server *Server) PrintLogo() {
 
 	file, err := os.Open("github.com/MouseChannel/MoChengServer/logo.txt")
 	if err != nil {
-		fmt.Print("Print Logo failed But still fine")
-		// return
+		// fmt.Print("Print Logo failed But still fine")
+		fmt.Print("█▄ ▄█ ▄▀▄ ▄▀▀ █▄█ ██▀ █▄ █ ▄▀\n█ ▀ █ ▀▄▀ ▀▄▄ █ █ █▄▄ █ ▀█ ▀▄█\n█ ▄▀▀   █▀▄ ██▀ ▄▀▄ █▀▄ ▀▄▀\n█ ▄██   █▀▄ █▄▄ █▀█ █▄▀  █ \n")
+
+		return
 	}
 	defer file.Close()
 	reader := bufio.NewReader(file)
