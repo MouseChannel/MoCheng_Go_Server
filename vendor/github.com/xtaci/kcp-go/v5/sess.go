@@ -905,8 +905,6 @@ func (l *Listener) SetDSCP(dscp int) error {
 	return errInvalidOperation
 }
 
-// func (l *Listener) GetConv() uint32 { return l.kcp.conv }
-
 // Accept implements the Accept method in the Listener interface; it waits for the next call and returns a generic Conn.
 func (l *Listener) Accept() (net.Conn, error) {
 	return l.AcceptKCP()
@@ -1025,9 +1023,7 @@ func serveConn(block BlockCrypt, dataShards, parityShards int, conn net.PacketCo
 }
 
 // Dial connects to the remote address "raddr" on the network "udp" without encryption and FEC
-func Dial(convid uint32, raddr string) (net.Conn, error) {
-	return DialWithOptions(convid, raddr, nil, 0, 0)
-}
+func Dial(raddr string) (net.Conn, error) { return DialWithOptions(raddr, nil, 0, 0) }
 
 // DialWithOptions connects to the remote address "raddr" on the network "udp" with packet encryption
 //
@@ -1036,7 +1032,7 @@ func Dial(convid uint32, raddr string) (net.Conn, error) {
 // 'dataShards', 'parityShards' specify how many parity packets will be generated following the data packets.
 //
 // Check https://github.com/klauspost/reedsolomon for details
-func DialWithOptions(convid uint32, raddr string, block BlockCrypt, dataShards, parityShards int) (*UDPSession, error) {
+func DialWithOptions(raddr string, block BlockCrypt, dataShards, parityShards int) (*UDPSession, error) {
 	// network type detection
 	udpaddr, err := net.ResolveUDPAddr("udp", raddr)
 	if err != nil {
@@ -1052,8 +1048,8 @@ func DialWithOptions(convid uint32, raddr string, block BlockCrypt, dataShards, 
 		return nil, errors.WithStack(err)
 	}
 
-	// var convid uint32
-	// binary.Read(rand.Reader, binary.LittleEndian, &convid)
+	var convid uint32
+	binary.Read(rand.Reader, binary.LittleEndian, &convid)
 	return newUDPSession(convid, dataShards, parityShards, nil, conn, true, udpaddr, block), nil
 }
 

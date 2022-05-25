@@ -1,9 +1,9 @@
 package matchSystem
 
 import (
-	"github.com/MouseChannel/MCServer/face"
-	"github.com/MouseChannel/MCServer/pb"
-	"github.com/MouseChannel/MCServer/singleton"
+	"github.com/MouseChannel/MoChengServer/face"
+	"github.com/MouseChannel/MoChengServer/pb"
+	"github.com/MouseChannel/MoChengServer/singleton"
 )
 
 type MatchMessageHandle struct {

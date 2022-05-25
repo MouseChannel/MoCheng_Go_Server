@@ -2,8 +2,8 @@ package roomSystem
 
 import (
 	"fmt"
-	"github.com/MouseChannel/MCServer/face"
-	"github.com/MouseChannel/MCServer/pb"
+	"github.com/MouseChannel/MoChengServer/face"
+	"github.com/MouseChannel/MoChengServer/pb"
 	"time"
 )
 

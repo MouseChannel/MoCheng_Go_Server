@@ -2,7 +2,7 @@ package singleton
 
 import (
 	"reflect"
-	"github.com/MouseChannel/MCServer/face"
+	"github.com/MouseChannel/MoChengServer/face"
 	"sync"
 )
 

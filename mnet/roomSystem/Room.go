@@ -1,9 +1,9 @@
 package roomSystem
 
 import (
-	"github.com/MouseChannel/MCServer/face"
-	"github.com/MouseChannel/MCServer/mnet/connectPool"
-	"github.com/MouseChannel/MCServer/singleton"
+	"github.com/MouseChannel/MoChengServer/face"
+	"github.com/MouseChannel/MoChengServer/mnet/connectPool"
+	"github.com/MouseChannel/MoChengServer/singleton"
 
  
 

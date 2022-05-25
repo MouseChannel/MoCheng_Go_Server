@@ -7,12 +7,12 @@ import (
 	"io"
 	"net"
 	"os"
-	"github.com/MouseChannel/MCServer/face"
-	"github.com/MouseChannel/MCServer/singleton"
+	"github.com/MouseChannel/MoChengServer/face"
+	"github.com/MouseChannel/MoChengServer/singleton"
 
-	"github.com/MouseChannel/MCServer/mnet/matchSystem"
+	"github.com/MouseChannel/MoChengServer/mnet/matchSystem"
 
-	"github.com/MouseChannel/MCServer/mnet/connectPool"
+	"github.com/MouseChannel/MoChengServer/mnet/connectPool"
 
 	"time"
 
@@ -93,7 +93,7 @@ func (server *Server) ListenKCP() {
 }
 
 func (server *Server) Init() {
-	fmt.Println("github.com/MouseChannel/MCServer Init")
+	fmt.Println("github.com/MouseChannel/MoChengServer Init")
 	server.IP = "0.0.0.0:6666"
 	server.UDPIP = "0.0.0.0:7777"
 	server.connectionPool = singleton.Singleton[connectPool.ConnectPool]()

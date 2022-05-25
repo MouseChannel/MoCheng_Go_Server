@@ -1,5 +1,3 @@
-# github.com/golang/protobuf v1.5.2
-## explicit; go 1.9
 # github.com/klauspost/cpuid v1.3.1
 ## explicit; go 1.12
 github.com/klauspost/cpuid
@@ -27,18 +25,12 @@ github.com/pkg/errors
 # github.com/templexxx/cpu v0.0.7
 ## explicit
 github.com/templexxx/cpu
-# github.com/templexxx/cpufeat v0.0.0-20180724012125-cef66df7f161
-## explicit
-# github.com/templexxx/xor v0.0.0-20191217153810-f85b25db303b
-## explicit
 # github.com/templexxx/xorsimd v0.4.1
 ## explicit; go 1.13
 github.com/templexxx/xorsimd
 # github.com/tjfoc/gmsm v1.3.2
 ## explicit; go 1.12
 github.com/tjfoc/gmsm/sm4
-# github.com/xtaci/kcp-go v5.4.20+incompatible
-## explicit
 # github.com/xtaci/kcp-go/v5 v5.6.1
 ## explicit; go 1.13
 github.com/xtaci/kcp-go/v5
