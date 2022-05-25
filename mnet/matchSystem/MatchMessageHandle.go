@@ -1,16 +1,16 @@
 package matchSystem
 
 import (
-	"github.com/MouseChannel/MoChengServer/face"
-	"github.com/MouseChannel/MoChengServer/pb"
-	"github.com/MouseChannel/MoChengServer/singleton"
+	"github.com/MouseChannel/MouseChannelServer/face"
+	"github.com/MouseChannel/MouseChannelServer/pb"
+	"github.com/MouseChannel/MouseChannelServer/singleton"
 )
 
 type MatchMessageHandle struct {
 	matchSystem face.IMatchSystem
 }
 
-func (messageHandle *MatchMessageHandle) Init( ) {
+func (messageHandle *MatchMessageHandle) Init() {
 
 }
 

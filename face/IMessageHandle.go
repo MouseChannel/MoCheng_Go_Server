@@ -1,10 +1,10 @@
 package face
 
 import (
-	"github.com/MouseChannel/MoChengServer/pb"
+	"github.com/MouseChannel/MouseChannelServer/pb"
 )
 
 type IMessageHandle interface {
-	Init( )
+	Init()
 	Response(session ISession, message *pb.PbMessage)
 }

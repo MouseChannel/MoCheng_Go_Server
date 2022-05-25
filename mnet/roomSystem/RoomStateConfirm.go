@@ -2,12 +2,13 @@ package roomSystem
 
 import (
 	"fmt"
-	"github.com/MouseChannel/MoChengServer/face"
-	"github.com/MouseChannel/MoChengServer/pb"
 	"time"
+
+	"github.com/MouseChannel/MouseChannelServer/face"
+	"github.com/MouseChannel/MouseChannelServer/pb"
 )
 
-// import "github.com/MouseChannel/MoChengServer/face"
+// import "github.com/MouseChannel/MouseChannelServer/face"
 
 type RoomStateConfirm struct {
 	// *RoomStateBase

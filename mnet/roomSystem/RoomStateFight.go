@@ -1,10 +1,10 @@
 package roomSystem
 
 import (
-	"github.com/MouseChannel/MoChengServer/face"
-	"github.com/MouseChannel/MoChengServer/pb"
-	"github.com/MouseChannel/MoChengServer/timer/timer"
-	"github.com/MouseChannel/MoChengServer/timer/timerface"
+	"github.com/MouseChannel/MouseChannelServer/face"
+	"github.com/MouseChannel/MouseChannelServer/pb"
+	"github.com/MouseChannel/MouseChannelServer/timer/timer"
+	"github.com/MouseChannel/MouseChannelServer/timer/timerface"
 )
 
 type RoomStateFight struct {
@@ -27,13 +27,12 @@ func NewRoomStateFight(room face.IRoom, length int) face.IRoomState {
 }
 
 func (state *RoomStateFight) Enter() {
- 
+
 	mes := pb.MakeFightStartCmd()
 	state.room.Broadcast(mes)
-	
+
 	state.mytimerticker.AddTickTimerTask(66, state.SyncLogicFrame)
 
-	
 }
 func (state *RoomStateFight) Exit() {
 
@@ -41,10 +40,7 @@ func (state *RoomStateFight) Exit() {
 
 func (state *RoomStateFight) Update(sesssion face.ISession, mes *pb.PbMessage) {
 
- 
-
 	state.fightOpArr = append(state.fightOpArr, mes.SendFightMessage)
-	
 
 }
 
@@ -52,12 +48,12 @@ func (state *RoomStateFight) SyncLogicFrame() {
 	state.frameId++
 
 	mes := pb.MakeFightData(state.frameId, state.fightOpArr)
-	 
+
 	state.room.Broadcast(mes)
-	if len(state.fightOpArr) >0{
+	if len(state.fightOpArr) > 0 {
 		state.fightOpArr = []*pb.FightMessage{}
 	}
-	
+
 }
 
 func (state *RoomStateFight) ResponseFightEnd(playerIndex int) {

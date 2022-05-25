@@ -2,8 +2,9 @@ package singleton
 
 import (
 	"reflect"
-	"github.com/MouseChannel/MoChengServer/face"
 	"sync"
+
+	"github.com/MouseChannel/MouseChannelServer/face"
 )
 
 var cache sync.Map

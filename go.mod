@@ -1,4 +1,4 @@
-module github.com/MouseChannel/MoChengServer
+module github.com/MouseChannel/MouseChannelServer
 
 go 1.18
 

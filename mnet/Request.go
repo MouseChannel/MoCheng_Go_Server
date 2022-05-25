@@ -1,14 +1,13 @@
 package mnet
 
 import (
-	"github.com/MouseChannel/MoChengServer/face"
+	"github.com/MouseChannel/MouseChannelServer/face"
 )
 
 type Request struct {
 	message []byte
 
 	session face.ISession
-	 
 }
 
 func (request *Request) GetMessage() []byte {
@@ -18,7 +17,6 @@ func (request *Request) GetMessage() []byte {
 func (request *Request) GetSession() face.ISession {
 	return request.session
 }
-
 
 func NewRequest(message []byte, session face.ISession) Request {
 	return Request{

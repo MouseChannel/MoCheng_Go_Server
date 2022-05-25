@@ -2,8 +2,9 @@ package connectPool
 
 import (
 	"fmt"
-	"github.com/MouseChannel/MoChengServer/face"
 	"sync"
+
+	"github.com/MouseChannel/MouseChannelServer/face"
 )
 
 type ConnectPool struct {
