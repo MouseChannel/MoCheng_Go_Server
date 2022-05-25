@@ -139,7 +139,7 @@ func (server *Server) Stop() {
 
 func (server *Server) PrintLogo() {
 
-	file, err := os.Open("./logo.txt")
+	file, err := os.Open("github.com/MouseChannel/MoChengServer/logo.txt")
 	if err != nil {
 		fmt.Print("Print Logo failed But still fine")
 		// return
