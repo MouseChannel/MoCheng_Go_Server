@@ -8,24 +8,16 @@ import (
 	"net"
 	"os"
 
-	"github.com/MouseChannel/MoChengServer/face"
-	"github.com/MouseChannel/MoChengServer/singleton"
-
-	"github.com/MouseChannel/MoChengServer/mnet/matchSystem"
-
-	"github.com/MouseChannel/MoChengServer/mnet/connectPool"
-
-	"time"
-
+	"github.com/MouseChannel/MoCheng_Go_Server/face"
 	"github.com/xtaci/kcp-go/v5"
+
+	"sync"
+	"time"
 )
 
 type Server struct {
-	IP             string
-	UDPIP          string
-	connectionPool *connectPool.ConnectPool
-	workerPool     face.IWorkerPool
-	matchSystem    face.IMatchSystem
+	IP    string
+	UDPIP string
 }
 
 func (server *Server) Start() {
@@ -36,33 +28,30 @@ func (server *Server) Start() {
 	go server.ListenKCP()
 }
 
-//UDP用于用户初次连接，分配一个KCPsession给他
+// UDP用于用户初次连接，分配一个KCPsession给他
 func (server *Server) ListenUDP() {
 
 	address, _ := net.ResolveUDPAddr("udp", server.UDPIP)
-	// remoteaddress, _ := net.ResolveUDPAddr("udp", "127.0.0.1:7777")
 
 	conn, err := net.ListenUDP("udp", address)
 
 	if err != nil {
 		fmt.Println("listen UDP failed!!")
 	}
+	buf := make([]byte, 4)
 	for {
 
-		buf := make([]byte, 32)
 		_, remoteAddress, err := conn.ReadFromUDP(buf)
 		if err != nil {
 			fmt.Println("receive UDP failed!!")
 		}
-		// fmt.Println(remoteAddress)
-		// fmt.Println(buf)
-		//这里的连接是本地（只有一个）的连接吗？如果是的话还需要把udp连接关闭，暂时还不知道怎么写
+
 		go func() {
-			if binary.BigEndian.Uint32(buf[:4]) == 0 {
+			if binary.BigEndian.Uint32(buf) == 0 {
 
 				//某个客户端申请连接,分配一个sid给它
-				buf := make([]byte, 4)
-				sid := server.connectionPool.GenerateUniqueSessionID()
+				// buf := make([]byte, 4)
+				sid := Get_ConnectPool_Instance().GenerateUniqueSessionID()
 				fmt.Println("UDPid", sid)
 				binary.BigEndian.PutUint32(buf, sid)
 				// fmt.Println("unique sid ", buf)
@@ -74,9 +63,10 @@ func (server *Server) ListenUDP() {
 	}
 }
 
-//KCP就是建立连接后的正常业务
+// KCP就是建立连接后的正常业务
 func (server *Server) ListenKCP() {
 	//开启服务器端口
+
 	kcplisten, err := kcp.ListenWithOptions(server.IP, nil, 0, 0)
 	if err != nil {
 		fmt.Println("kcp.Listen failed!!")
@@ -88,58 +78,18 @@ func (server *Server) ListenKCP() {
 			fmt.Println("accept conn failed!!")
 			continue
 		}
-		server.AddSession(conn)
+		Get_ConnectPool_Instance().AddSession(conn)
 
 	}
-}
-
-func (server *Server) Init() {
-	fmt.Println("github.com/MouseChannel/MoChengServer Init")
-	server.IP = "0.0.0.0:6666"
-	server.UDPIP = "0.0.0.0:7777"
-	server.connectionPool = singleton.Singleton[connectPool.ConnectPool]()
-	// server.connectionPool.Init()
-
-	singleton.Singleton[matchSystem.MatchSystem]().Init()
-
-}
-
-func (server *Server) Serve() {
-
-	// server.Init()
-	server.Start()
-
-	select {}
-
-}
-func (server *Server) AddSession(conn *kcp.UDPSession) {
-	sid := conn.GetConv()
-
-	newSession := NewSession(conn, sid)
-	server.connectionPool.AddSession(sid, newSession)
-	newSession.Start()
-
-	fmt.Println("a new session connect ")
-}
-func (server *Server) RemoveSession(sid uint32) {
-	server.connectionPool.DeleteSession(sid)
-	// delete(server.sessionMap, sid)
-}
-func (server *Server) GetSession(sid uint32) face.ISession {
-
-	return server.connectionPool.GetSession(sid)
-
 }
 
 func (server *Server) Stop() {
 
 }
 
-//测试用
-
 func (server *Server) PrintLogo() {
 
-	file, err := os.Open("github.com/MouseChannel/MoChengServer/logo.txt")
+	file, err := os.Open("github.com/MouseChannel/MoCheng_Go_Server/logo.txt")
 	if err != nil {
 		// fmt.Print("Print Logo failed But still fine")
 		fmt.Print("█▄ ▄█ ▄▀▄ ▄▀▀ █▄█ ██▀ █▄ █ ▄▀\n█ ▀ █ ▀▄▀ ▀▄▄ █ █ █▄▄ █ ▀█ ▀▄█\n█ ▄▀▀   █▀▄ ██▀ ▄▀▄ █▀▄ ▀▄▀\n█ ▄██   █▀▄ █▄▄ █▀█ █▄▀  █ \n")
@@ -160,6 +110,20 @@ func (server *Server) PrintLogo() {
 
 }
 
-func ServerStartWork() {
-	singleton.Singleton[Server]().Serve()
+var server_instance face.IServer
+var server_once sync.Once
+
+func Get_Server_Instance() face.IServer {
+	server_once.Do(func() {
+		server_instance = NewServer()
+	})
+	return server_instance
+}
+
+func NewServer() face.IServer {
+	return &Server{
+		IP:    "0.0.0.0:6666",
+		UDPIP: "0.0.0.0:7777",
+	}
+
 }

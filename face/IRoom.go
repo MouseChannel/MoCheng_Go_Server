@@ -12,7 +12,7 @@ package face
 // )
 
 type IRoom interface {
-	Init()
+	Start()
 	Delete()
 	Broadcast(data []byte)
 	// SendIndex()

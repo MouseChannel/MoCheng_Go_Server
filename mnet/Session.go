@@ -6,8 +6,7 @@ import (
 
 	"time"
 
-	"github.com/MouseChannel/MoChengServer/face"
-	"github.com/MouseChannel/MoChengServer/singleton"
+	"github.com/MouseChannel/MoCheng_Go_Server/face"
 
 	"github.com/xtaci/kcp-go/v5"
 )
@@ -21,7 +20,7 @@ type Session struct {
 	address    string
 	isAlive    chan bool
 
-	messageChan chan []byte
+	writeChan chan []byte
 
 	// server face.IServer
 }
@@ -42,9 +41,8 @@ func (session *Session) CheckAlive() {
 func (session *Session) StartReader() {
 	fmt.Println("Session Start Read")
 	// defer session.Stop()
+	buf := make([]byte, 4096)
 	for {
-
-		buf := make([]byte, 4096)
 
 		n, err := session.kcpSession.Read(buf)
 		//只截取有效数据部分
@@ -54,15 +52,13 @@ func (session *Session) StartReader() {
 			return
 		}
 
-		request := NewRequest(
-			buf[:n],
-			session)
-
 		// mes := &pb.PbMessage{}
 		// if err := proto.Unmarshal(request.GetMessage(), mes); err != nil {
 		// 	fmt.Println(err)
 		// }
-		singleton.Singleton[WorkerPool]().AddToTaskQueue(request)
+		Get_WorkerPool_Instance().AddToTaskQueue(NewRequest(
+			buf[:n],
+			session.sid))
 		// session.server.HandleMessage(request)
 
 		session.isAlive <- true
@@ -71,12 +67,12 @@ func (session *Session) StartReader() {
 
 func (session *Session) SendMessage(data []byte) {
 
-	session.messageChan <- data
+	session.writeChan <- data
 }
 
 func (session *Session) StartWriter() {
 	for {
-		data := <-session.messageChan
+		data := <-session.writeChan
 		if _, err := session.kcpSession.Write(data); err != nil {
 			fmt.Println("Send Data error:, ", err, " Conn Writer exit")
 			return
@@ -95,12 +91,13 @@ func (session *Session) Start() {
 func (session *Session) Stop() {
 	session.kcpSession.Close()
 	fmt.Println("session :", session.GetSid(), "STOP")
-	singleton.Singleton[Server]().RemoveSession(session.sid)
+	Get_ConnectPool_Instance().DeleteSession(session.sid)
+
 	// session.server.RemoveSession(session.sid)
 
 	//关闭该链接全部管道
 	close(session.isAlive)
-	close(session.messageChan)
+	close(session.writeChan)
 }
 
 func (session *Session) ChangeRoomId(roomId uint32) {
@@ -123,11 +120,11 @@ func (session *Session) GetRemoteAddress() string {
 }
 func NewSession(conn *kcp.UDPSession, sid uint32) face.ISession {
 	session := &Session{
-		sid:         sid,
-		roomId:      0, // 该玩家属于哪个间
-		kcpSession:  conn,
-		isAlive:     make(chan bool),
-		messageChan: make(chan []byte),
+		sid:        sid,
+		roomId:     0, // 该玩家属于哪个间
+		kcpSession: conn,
+		isAlive:    make(chan bool),
+		writeChan:  make(chan []byte),
 		// server:      server,
 	}
 	return session

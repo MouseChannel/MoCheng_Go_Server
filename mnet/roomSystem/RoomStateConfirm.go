@@ -4,22 +4,24 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/MouseChannel/MoChengServer/face"
-	"github.com/MouseChannel/MoChengServer/pb"
+	"github.com/MouseChannel/MoCheng_Go_Server/face"
+	"github.com/MouseChannel/MoCheng_Go_Server/pb"
 )
 
-// import "github.com/MouseChannel/MoChengServer/face"
+// import "github.com/MouseChannel/MoCheng_Go_Server/face"
 
 type RoomStateConfirm struct {
 	// *RoomStateBase
 	room       face.IRoom
 	confirmArr []bool
+	done       chan bool
 }
 
 func NewRoomStateConfirm(room face.IRoom, length int) face.IRoomState {
 	state := &RoomStateConfirm{
 		room:       room,
 		confirmArr: make([]bool, length),
+		done:       make(chan bool),
 	}
 	return state
 }
@@ -56,6 +58,7 @@ func (state *RoomStateConfirm) Update(sesssion face.ISession, mes *pb.PbMessage)
 	state.confirmArr[index] = true
 
 	if state.CheckAllConfirm() {
+		state.done <- true
 		// state.room.ChangeRoomState(int(roomStateSelect))
 
 		// ----------------
@@ -73,10 +76,14 @@ func (state *RoomStateConfirm) Update(sesssion face.ISession, mes *pb.PbMessage)
 
 }
 func (state *RoomStateConfirm) CheckTimeLimit() {
-	<-time.After(time.Second * 99)
-	if state == state.room.GetCurrentState() {
-		fmt.Println("room confirm reachtime ")
-		state.Dismiss()
+	select {
+	case <-state.done:
+		return
+	case <-time.After(time.Second * 99):
+		if state == state.room.GetCurrentState() {
+			fmt.Println("room confirm reachtime ")
+			state.Dismiss()
+		}
 	}
 
 }

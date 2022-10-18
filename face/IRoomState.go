@@ -1,6 +1,6 @@
 package face
 
-import "github.com/MouseChannel/MoChengServer/pb"
+import "github.com/MouseChannel/MoCheng_Go_Server/pb"
 
 type IRoomState interface {
 	Enter()

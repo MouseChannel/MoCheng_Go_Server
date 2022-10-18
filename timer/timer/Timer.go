@@ -19,8 +19,7 @@ func (myTimer *MyTimer) UpdateTask() {
 		select {
 		case <-myTimer.needDelete:
 			return
-		default:
-		 
+		default:		 
 			myTimer.callback()
 		}
 

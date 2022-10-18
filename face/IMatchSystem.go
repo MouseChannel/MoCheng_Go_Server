@@ -1,9 +1,8 @@
 package face
 
-import "github.com/MouseChannel/MoChengServer/pb"
+import "github.com/MouseChannel/MoCheng_Go_Server/pb"
 
 type IMatchSystem interface {
-	Init()
 	EnterMatchQueue(session ISession)
 	QuitMatchQueue(session ISession)
 	UpdateMatchQueue(message *pb.PbMessage, session ISession)

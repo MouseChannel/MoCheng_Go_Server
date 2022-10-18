@@ -1,9 +1,7 @@
 package roomSystem
 
 import (
-	"github.com/MouseChannel/MoChengServer/face"
-	"github.com/MouseChannel/MoChengServer/mnet/connectPool"
-	"github.com/MouseChannel/MoChengServer/singleton"
+	"github.com/MouseChannel/MoCheng_Go_Server/face"
 
 	"sync"
 )
@@ -24,7 +22,7 @@ type SelectData struct {
 	isReady  bool
 }
 
-//a single room
+// a single room
 type Room struct {
 	stateMap     map[RoomState]face.IRoomState
 	currentState RoomState
@@ -33,17 +31,13 @@ type Room struct {
 	playerSessions []face.ISession
 	selectArr      []int
 
-	lock        sync.Mutex
-	connectPool *connectPool.ConnectPool
+	lock     sync.Mutex
+	onSpawn  func(face.IRoom)
+	onDelete func(face.IRoom)
 }
 
-func (room *Room) Init() {
-	room.connectPool = singleton.Singleton[connectPool.ConnectPool]()
-
-	room.connectPool.AddRoom(room.roomId, room)
-	// room.server
-
-	// fmt.Println("New Room Init")
+func (room *Room) Start() {
+	room.onSpawn(room)
 	length := len(room.playerSessions)
 	//Add StateMap
 	room.stateMap[roomStateConfirm] = NewRoomStateConfirm(room, length)
@@ -57,7 +51,7 @@ func (room *Room) Init() {
 }
 
 func (room *Room) Delete() {
-	room.connectPool.DeleteRoom(room.roomId)
+	room.onDelete(room)
 
 }
 
@@ -122,7 +116,7 @@ func (room *Room) GetCurrentState() face.IRoomState {
 	return room.stateMap[room.currentState]
 }
 
-func NewRoom(playerSessions []face.ISession) *Room {
+func NewRoom(playerSessions []face.ISession, OnSpawn func(face.IRoom), OnDelete func(face.IRoom)) face.IRoom {
 
 	newRoom := &Room{
 
@@ -131,7 +125,9 @@ func NewRoom(playerSessions []face.ISession) *Room {
 		roomId:         playerSessions[0].GetSid(),
 		playerSessions: playerSessions,
 		lock:           *new(sync.Mutex),
+		onSpawn:        OnSpawn,
+		onDelete:       OnDelete,
 	}
-	// newRoom.Init()
+
 	return newRoom
 }

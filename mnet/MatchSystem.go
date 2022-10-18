@@ -1,31 +1,23 @@
-package matchSystem
+package mnet
 
 import (
 	"container/list"
 	"fmt"
 
-	"github.com/MouseChannel/MoChengServer/face"
+	"github.com/MouseChannel/MoCheng_Go_Server/face"
 
 	"sync"
 
-	"github.com/MouseChannel/MoChengServer/mnet/roomSystem"
-	"github.com/MouseChannel/MoChengServer/pb"
+	"github.com/MouseChannel/MoCheng_Go_Server/pb"
 )
 
-type MatchSystem struct {
+type MatchManager struct {
 	matchQueue list.List
 	matchlen   int
 	lock       *sync.Mutex
 }
 
-func (match *MatchSystem) Init() {
-
-	match.matchlen = 4
-	match.lock = new(sync.Mutex)
-
-}
-
-func (match *MatchSystem) UpdateMatchQueue(message *pb.PbMessage, session face.ISession) {
+func (match *MatchManager) UpdateMatchQueue(message *pb.PbMessage, session face.ISession) {
 
 	switch message.CmdMatch {
 	case pb.PbMessage_joinMatch:
@@ -38,7 +30,7 @@ func (match *MatchSystem) UpdateMatchQueue(message *pb.PbMessage, session face.I
 
 }
 
-func (match *MatchSystem) EnterMatchQueue(session face.ISession) {
+func (match *MatchManager) EnterMatchQueue(session face.ISession) {
 	fmt.Println("a player join match", session)
 	match.lock.Lock()
 	match.matchQueue.PushBack(session)
@@ -55,7 +47,7 @@ func (match *MatchSystem) EnterMatchQueue(session face.ISession) {
 
 }
 
-func (match *MatchSystem) QuitMatchQueue(session face.ISession) {
+func (match *MatchManager) QuitMatchQueue(session face.ISession) {
 	fmt.Println("a player quit match", session.GetSid())
 	match.lock.Lock()
 	for i := match.matchQueue.Front(); i != nil; i = i.Next() {
@@ -71,7 +63,7 @@ func (match *MatchSystem) QuitMatchQueue(session face.ISession) {
 	// match.server.SendMessageToClient(sid, mes)
 }
 
-func (match *MatchSystem) GenerateNewRoom() {
+func (match *MatchManager) GenerateNewRoom() {
 
 	match.lock.Lock()
 
@@ -82,11 +74,27 @@ func (match *MatchSystem) GenerateNewRoom() {
 		match.matchQueue.Remove(match.matchQueue.Front())
 	}
 
-	newRoom := roomSystem.NewRoom(roomPlayerSession)
+	SpawnRoom(roomPlayerSession)
 
-	newRoom.Init()
 	fmt.Println("newww rom")
 
 	match.lock.Unlock()
 
+}
+
+func NewMatchSystem() face.IMatchSystem {
+	return &MatchManager{
+		matchlen: 4,
+		lock:     new(sync.Mutex),
+	}
+}
+
+var match_instance face.IMatchSystem
+var match_once sync.Once
+
+func Get_Match_Instance() face.IMatchSystem {
+	match_once.Do(func() {
+		match_instance = NewMatchSystem()
+	})
+	return match_instance
 }

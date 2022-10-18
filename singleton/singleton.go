@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"sync"
 
-	"github.com/MouseChannel/MoChengServer/face"
+	"github.com/MouseChannel/MoCheng_Go_Server/face"
 )
 
 var cache sync.Map

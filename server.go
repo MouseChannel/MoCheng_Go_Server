@@ -1,17 +1,17 @@
 package main
 
 import (
-	"github.com/MouseChannel/MoChengServer/mnet"
+	"github.com/MouseChannel/MoCheng_Go_Server/mnet"
 
 	"fmt"
-	// "github.com/MouseChannel/MoChengServer/singleton"
+	// "github.com/MouseChannel/MoCheng_Go_Server/singleton"
 )
 
-// mnet "github.com/MouseChannel/MoChengServer/Net"
+// mnet "github.com/MouseChannel/MoCheng_Go_Server/Net"
 
 func main() {
 
-	mnet.ServerStartWork()
+	mnet.Get_Server_Instance().Start()
 	// server.Serve()
 
 }

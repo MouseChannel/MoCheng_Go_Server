@@ -1,10 +1,10 @@
 package roomSystem
 
 import (
-	"github.com/MouseChannel/MoChengServer/face"
-	"github.com/MouseChannel/MoChengServer/pb"
-	"github.com/MouseChannel/MoChengServer/timer/timer"
-	"github.com/MouseChannel/MoChengServer/timer/timerface"
+	"github.com/MouseChannel/MoCheng_Go_Server/face"
+	"github.com/MouseChannel/MoCheng_Go_Server/pb"
+	"github.com/MouseChannel/MoCheng_Go_Server/timer/timer"
+	"github.com/MouseChannel/MoCheng_Go_Server/timer/timerface"
 )
 
 type RoomStateFight struct {

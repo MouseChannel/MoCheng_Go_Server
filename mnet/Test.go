@@ -3,7 +3,7 @@ package mnet
 import (
 	"fmt"
 
-	"github.com/MouseChannel/MoChengServer/face"
+	"github.com/MouseChannel/MoCheng_Go_Server/face"
 )
 
 type TestStruct struct {

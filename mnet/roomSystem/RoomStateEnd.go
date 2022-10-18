@@ -1,8 +1,8 @@
 package roomSystem
 
 import (
-	"github.com/MouseChannel/MoChengServer/face"
-	"github.com/MouseChannel/MoChengServer/pb"
+	"github.com/MouseChannel/MoCheng_Go_Server/face"
+	"github.com/MouseChannel/MoCheng_Go_Server/pb"
 )
 
 type RoomStateEnd struct {

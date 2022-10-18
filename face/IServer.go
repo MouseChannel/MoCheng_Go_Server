@@ -1,24 +1,25 @@
 package face
 
-import "github.com/xtaci/kcp-go/v5"
+// import "github.com/xtaci/kcp-go/v5"
 
 type IServer interface {
 	Start()
 	Stop()
-	Serve()
+	ListenUDP()
+	ListenKCP()
 
-	GetRoom(roomId uint32) IRoom
-	AddRoom(roomId uint32, room IRoom)
-	RemoveRoom(roomId uint32)
+	// GetRoom(roomId uint32) IRoom
+	// AddRoom(roomId uint32, room IRoom)
+	// RemoveRoom(roomId uint32)
 
-	GetSession(sid uint32) ISession
-	AddSession(conn *kcp.UDPSession)
-	RemoveSession(sid uint32)
+	 
+	 
+	 
 
-	HandleMessage(request IRequest)
-	SendMessageToClient(sid uint32, data []byte)
+	// HandleMessage(request IRequest)
+	// SendMessageToClient(sid uint32, data []byte)
 
-	GetMatchSystem() IMatchSystem
+	// GetMatchSystem() IMatchSystem
 
-	GetAllPlayer() map[uint32]ISession
+	// GetAllPlayer() map[uint32]ISession
 }
